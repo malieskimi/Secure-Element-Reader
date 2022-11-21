@@ -200,7 +200,7 @@ jobs:
           name: ${{ needs.build.outputs.semVer }}.osx-x64.zip
           
       - name: List
-        run: ls l -r Secure-Element-Reader/
+        run: ls l -r 
       
       #- uses: actions/download-artifact@v2
       #  with:
