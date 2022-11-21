@@ -99,7 +99,8 @@ jobs:
                 codesign --force --deep --timestamp --options=runtime --entitlements SEReader.entitlements --sign "${{ secrets.PROD_MACOS_CERTIFICATE_NAME }}" "$fname"
             fi
           done
-          codesign --force --deep --timestamp --options=runtime --entitlements SEReader.entitlements --sign "${{ secrets.PROD_MACOS_CERTIFICATE_NAME }}" "${{ env.MACOS_PATH }}/SecureElementReader.App.app"
+          echo "[INFO] Signing app file ${{ env.MACOS_PATH }}/SecureElementReader.App.app"
+          codesign --force --timestamp --options=runtime --entitlements SEReader.entitlements --sign "${{ secrets.PROD_MACOS_CERTIFICATE_NAME }}" "${{ env.MACOS_PATH }}/SecureElementReader.App.app"
         
       - name: chmod
         if: matrix.os == 'macos-latest'
