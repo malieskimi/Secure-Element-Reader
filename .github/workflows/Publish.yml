@@ -231,10 +231,8 @@ jobs:
         uses: csexton/release-asset-action@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}         
-          files: |
-            #${{ needs.build.outputs.semVer }}.win-x64.zip            
-            ${{ needs.build.outputs.semVer }}.osx-x64
-            #${{ needs.build.outputs.semVer }}.linux-x64.zip
+          files: |                    
+            ${{ needs.build.outputs.semVer }}.osx-x64            
           release-url: ${{ steps.create_release.outputs.upload_url }}
           
       - name: Delete Build Artifact
