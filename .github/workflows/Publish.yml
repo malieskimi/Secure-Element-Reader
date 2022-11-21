@@ -198,9 +198,9 @@ jobs:
 
     steps:
       
-      - uses: actions/download-artifact@v2
-        with:
-          name: src/SecureElementReader.App/bin/Release/net6.0/osx-x64/publish/SecureElementReader.App.app.zip
+      #- uses: actions/download-artifact@v2
+      #  with:
+      #    name: src/SecureElementReader.App/bin/Release/net6.0/osx-x64/publish/SecureElementReader.App.app.zip
           
       #- uses: actions/download-artifact@v2
       #  with:
