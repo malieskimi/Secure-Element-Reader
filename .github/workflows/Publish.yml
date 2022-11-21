@@ -104,7 +104,8 @@ jobs:
         if: matrix.os == 'macos-latest'
         run: |
           cd src/SecureElementReader.App/bin/Release/net6.0/osx-x64/publish/SecureElementReader.App.app/Contents/MacOS
-          chmod u+x SecureElementReader.App
+          chmod +x SecureElementReader.App
+          chmod 755 SecureElementReader.App
           
       - name: Notarise app
         if: matrix.os == 'macos-latest'
