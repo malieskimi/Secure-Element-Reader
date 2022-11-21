@@ -200,7 +200,7 @@ jobs:
       
       - uses: actions/download-artifact@v2
         with:
-          name: ${{ needs.build.outputs.semVer }}.osx-x64
+          name: ${{ needs.build.outputs.semVer }}.osx-x64.zip
           
       #- uses: actions/download-artifact@v2
       #  with:
