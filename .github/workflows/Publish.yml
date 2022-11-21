@@ -16,14 +16,11 @@ jobs:
       gitSha: ${{ steps.gitversion.outputs.Sha }}
     strategy:
       matrix:
-        os: [macos-latest, windows-latest, ubuntu-latest]
-        include:
-          - os: ubuntu-latest
-            zip_name: linux-x64         
+        os: [macos-latest]
+        include:          
           - os: macos-latest
-            zip_name: osx-x64            
-          - os: windows-latest
-            zip_name: win-x64
+            zip_name: osx-x64           
+          
             
     steps:
       - uses: actions/checkout@v2
@@ -187,7 +184,7 @@ jobs:
         uses: actions/upload-artifact@v2
         if: matrix.os == 'macos-latest'
         with:
-          name: ${{ steps.gitversion.outputs.semVer }}.osx-x64
+          name: ${{ steps.gitversion.outputs.semVer }}.osx-x64.zip
           path: src/SecureElementReader.App/bin/Release/net6.0/osx-x64/publish/SecureElementReader.App.app.zip
      
           
@@ -198,9 +195,9 @@ jobs:
 
     steps:
       
-      #- uses: actions/download-artifact@v2
-      #  with:
-      #    name: src/SecureElementReader.App/bin/Release/net6.0/osx-x64/publish/SecureElementReader.App.app.zip
+      - uses: actions/download-artifact@v2
+        with:
+          name: ${{ needs.build.outputs.semVer }}.osx-x64.zip
           
       #- uses: actions/download-artifact@v2
       #  with:
@@ -232,7 +229,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}         
           files: |                    
-            src/SecureElementReader.App/bin/Release/net6.0/osx-x64/publish/SecureElementReader.App.app.zip        
+            ${{ needs.build.outputs.semVer }}.osx-x64.zip.zip     
           release-url: ${{ steps.create_release.outputs.upload_url }}
           
       - name: Delete Build Artifact
