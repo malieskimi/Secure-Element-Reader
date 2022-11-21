@@ -46,17 +46,17 @@ jobs:
           useConfigFile: true
           configFilePath: .github/workflows/GitVersion.yml
 
-      - name: Restore project 
-        if: matrix.os != 'macos-latest'
-        run: dotnet restore ${{ env.PROJECT_PATH }}
+      #- name: Restore project 
+      #  if: matrix.os != 'macos-latest'
+      #  run: dotnet restore ${{ env.PROJECT_PATH }}
 
-      - name: Build project 
-        if: matrix.os != 'macos-latest'
-        run: dotnet build ${{ env.PROJECT_PATH }} -c Release --no-restore
+      #- name: Build project 
+      #  if: matrix.os != 'macos-latest'
+      #  run: dotnet build ${{ env.PROJECT_PATH }} -c Release --no-restore
 
-      - name: Publish project for Windows and Linux
-        if: matrix.os != 'macos-latest'
-        run: dotnet publish ${{ env.PROJECT_PATH }} -c Release -r ${{ matrix.zip_name }} -p:PublishSingleFile=true -p:AssemblyVersion=${{ steps.gitversion.outputs.semVer }}
+      #- name: Publish project for Windows and Linux
+      #  if: matrix.os != 'macos-latest'
+      #  run: dotnet publish ${{ env.PROJECT_PATH }} -c Release -r ${{ matrix.zip_name }} -p:PublishSingleFile=true -p:AssemblyVersion=${{ steps.gitversion.outputs.semVer }}
 
       #- name: Publish project for Windows
       #  if: matrix.os == 'windows-latest'
@@ -121,28 +121,28 @@ jobs:
           xcrun notarytool submit "SEReader.zip" --wait --keychain-profile "AC_PASSWORD"
           xcrun stapler staple src/SecureElementReader.App/bin/Release/net6.0/osx-x64/publish/SecureElementReader.App.app
           
-      - name: Windows code signing
-        if: matrix.os == 'windows-latest'
-        uses: neoz-technologies/code-sign-action@v3
-        with:        
-          certificate: ${{ secrets.CERT_FOR_SIGN }}
-          password: ${{ secrets.CERT_PW }}
-          folder: 'src\SecureElementReader.App\bin\Release\net6.0\win-x64\publish\'
-          recursive: true        
+      #- name: Windows code signing
+      #  if: matrix.os == 'windows-latest'
+      #  uses: neoz-technologies/code-sign-action@v3
+      #  with:        
+      #    certificate: ${{ secrets.CERT_FOR_SIGN }}
+      #    password: ${{ secrets.CERT_PW }}
+      #    folder: 'src\SecureElementReader.App\bin\Release\net6.0\win-x64\publish\'
+      #    recursive: true        
      
-      - name: Zip releases 
-        if: matrix.os != 'macos-latest'
-        uses: vimtor/action-zip@v1
-        with:   
-          files: src/SecureElementReader.App/bin/Release/net6.0/${{ matrix.zip_name }}/publish/
-          dest: ${{ steps.gitversion.outputs.semVer }}.${{ matrix.zip_name }}.zip
+      #- name: Zip releases 
+      #  if: matrix.os != 'macos-latest'
+      #  uses: vimtor/action-zip@v1
+      #  with:   
+      #    files: src/SecureElementReader.App/bin/Release/net6.0/${{ matrix.zip_name }}/publish/
+      #    dest: ${{ steps.gitversion.outputs.semVer }}.${{ matrix.zip_name }}.zip
      
-      - name: Upload artifacts 
-        uses: actions/upload-artifact@v2
-        if: matrix.os != 'macos-latest'
-        with:
-          name: ${{ steps.gitversion.outputs.semVer }}.${{ matrix.zip_name }}.zip
-          path: ${{ steps.gitversion.outputs.semVer }}.${{ matrix.zip_name }}.zip          
+      #- name: Upload artifacts 
+      #  uses: actions/upload-artifact@v2
+      #  if: matrix.os != 'macos-latest'
+      #  with:
+      #    name: ${{ steps.gitversion.outputs.semVer }}.${{ matrix.zip_name }}.zip
+      #    path: ${{ steps.gitversion.outputs.semVer }}.${{ matrix.zip_name }}.zip          
       
       #- name: Zip Win release 
       #  if: matrix.os == 'windows-latest'
@@ -187,7 +187,7 @@ jobs:
         uses: actions/upload-artifact@v2
         if: matrix.os == 'macos-latest'
         with:
-          name: ${{ steps.gitversion.outputs.semVer }}.osx-x64.zip
+          name: ${{ steps.gitversion.outputs.semVer }}.osx-x64
           path: src/SecureElementReader.App/bin/Release/net6.0/osx-x64/publish/SecureElementReader.App.app.zip
      
           
@@ -200,15 +200,15 @@ jobs:
       
       - uses: actions/download-artifact@v2
         with:
-          name: ${{ needs.build.outputs.semVer }}.osx-x64.zip
+          name: ${{ needs.build.outputs.semVer }}.osx-x64
           
-      - uses: actions/download-artifact@v2
-        with:
-          name: ${{ needs.build.outputs.semVer }}.win-x64.zip
+      #- uses: actions/download-artifact@v2
+      #  with:
+      #    name: ${{ needs.build.outputs.semVer }}.win-x64.zip
           
-      - uses: actions/download-artifact@v2
-        with:
-          name: ${{ needs.build.outputs.semVer }}.linux-x64.zip
+      #- uses: actions/download-artifact@v2
+      #  with:
+      #    name: ${{ needs.build.outputs.semVer }}.linux-x64.zip
       
       - name: Create Tag
         uses: Yanjingzhu/FirstJSAction@v1.3
@@ -232,9 +232,9 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}         
           files: |
-            ${{ needs.build.outputs.semVer }}.win-x64.zip            
-            ${{ needs.build.outputs.semVer }}.osx-x64.zip
-            ${{ needs.build.outputs.semVer }}.linux-x64.zip
+            #${{ needs.build.outputs.semVer }}.win-x64.zip            
+            ${{ needs.build.outputs.semVer }}.osx-x64
+            #${{ needs.build.outputs.semVer }}.linux-x64.zip
           release-url: ${{ steps.create_release.outputs.upload_url }}
           
       - name: Delete Build Artifact
