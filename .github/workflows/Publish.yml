@@ -202,6 +202,12 @@ jobs:
       - name: List
         run: ls -r 
       
+      - name: Rename file
+        run: mv SecureElementReader.App.app.zip ${{ needs.build.outputs.semVer }}.osx-x64.zip
+        
+      - name: List
+        run: ls -r 
+      
       #- uses: actions/download-artifact@v2
       #  with:
       #    name: ${{ needs.build.outputs.semVer }}.win-x64.zip
