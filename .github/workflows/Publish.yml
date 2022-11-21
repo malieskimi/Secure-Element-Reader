@@ -17,14 +17,11 @@ jobs:
       gitSha: ${{ steps.gitversion.outputs.Sha }}
     strategy:
       matrix:
-        os: [macos-latest, windows-latest, ubuntu-latest]
-        include:
-          - os: ubuntu-latest
-            zip_name: linux-x64         
+        os: [macos-latest]
+        include:        
           - os: macos-latest
             zip_name: osx-x64            
-          - os: windows-latest
-            zip_name: win-x64
+          
             
     steps:
       - uses: actions/checkout@v2
@@ -64,7 +61,7 @@ jobs:
         run: |
           cd src/SecureElementReader.App
           dotnet restore -r osx-x64
-          dotnet msbuild -t:BundleApp -p:RuntimeIdentifier=osx-x64 -property:Configuration=Release -p:AssemblyVersion=${{ steps.gitversion.outputs.semVer }} -p:UseAppHost=true
+          dotnet msbuild -t:BundleApp -p:PublishSingleFile=true -p:RuntimeIdentifier=osx-x64 -property:Configuration=Release -p:AssemblyVersion=${{ steps.gitversion.outputs.semVer }} -p:UseAppHost=true
           mkdir Assets/logo.iconset
           cp Assets/taxcore.png Assets/logo.iconset/icon_512x512.png
           iconutil -c icns Assets/logo.iconset
