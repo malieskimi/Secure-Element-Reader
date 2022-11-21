@@ -96,7 +96,7 @@ jobs:
             if [ -f "$fname" ]
               then
                 echo "[INFO] Signing $fname"
-                codesign --force --deep --timestamp --options=runtime --entitlements SEReader.entitlements --sign "${{ secrets.PROD_MACOS_CERTIFICATE_NAME }}" "$fname"
+                codesign --force --timestamp --options=runtime --entitlements SEReader.entitlements --sign "${{ secrets.PROD_MACOS_CERTIFICATE_NAME }}" "$fname"
             fi
           done
           echo "[INFO] Signing app file ${{ env.MACOS_PATH }}/SecureElementReader.App.app"
