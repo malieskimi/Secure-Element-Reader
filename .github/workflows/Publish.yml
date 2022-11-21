@@ -199,6 +199,9 @@ jobs:
         with:
           name: ${{ needs.build.outputs.semVer }}.osx-x64.zip
           
+      - name: List
+        run: ls l -r Secure-Element-Reader/
+      
       #- uses: actions/download-artifact@v2
       #  with:
       #    name: ${{ needs.build.outputs.semVer }}.win-x64.zip
