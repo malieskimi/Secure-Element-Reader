@@ -232,7 +232,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}         
           files: |                    
-            ${{ needs.build.outputs.semVer }}.osx-x64            
+            ${{ needs.build.outputs.semVer }}.osx-x64.zip        
           release-url: ${{ steps.create_release.outputs.upload_url }}
           
       - name: Delete Build Artifact
