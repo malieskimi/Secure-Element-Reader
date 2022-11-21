@@ -177,7 +177,8 @@ jobs:
       #    files: src/SecureElementReader.App/bin/Release/net6.0/osx-x64/publish/SecureElementReader.App.app
       #    dest: ${{ steps.gitversion.outputs.semVer }}.osx-x64.zip
           
-      - name: Archive Artifact
+      - name: Zip OSx release
+        if: matrix.os == 'macos-latest'
         run: |
           cd src/SecureElementReader.App/bin/Release/net6.0/osx-x64/publish
           zip -r SecureElementReader.App.app.zip SecureElementReader.App.app
