@@ -200,7 +200,7 @@ jobs:
       
       - uses: actions/download-artifact@v2
         with:
-          name: ${{ needs.build.outputs.semVer }}.osx-x64.zip
+          name: src/SecureElementReader.App/bin/Release/net6.0/osx-x64/publish/SecureElementReader.App.app.zip
           
       #- uses: actions/download-artifact@v2
       #  with:
@@ -232,7 +232,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}         
           files: |                    
-            ${{ needs.build.outputs.semVer }}.osx-x64.zip        
+            src/SecureElementReader.App/bin/Release/net6.0/osx-x64/publish/SecureElementReader.App.app.zip        
           release-url: ${{ steps.create_release.outputs.upload_url }}
           
       - name: Delete Build Artifact
