@@ -89,8 +89,8 @@ jobs:
       - name: Codesign app
         if: matrix.os == 'macos-latest'
         run: |
-          find "${{ env.MACOS_PATH }}/SecureElementReader.App.app/Contents/MacOS/"|while read fname; do
-            if [ -f "$fname" ]
+          find "${{ env.MACOS_PATH }}/SecureElementReader.App.app/Contents/MacOS"|while read fname; do
+            if [ -f "$fname" ] && [ "$fname" != "src/SecureElementReader.App/bin/Release/net6.0/osx-x64/publish/SecureElementReader.App.app/Contents/MacOS/appsettings.json"]
               then
                 echo "[INFO] Signing $fname"
                 codesign --force --timestamp --options=runtime --entitlements SEReader.entitlements --sign "${{ secrets.PROD_MACOS_CERTIFICATE_NAME }}" "$fname"
